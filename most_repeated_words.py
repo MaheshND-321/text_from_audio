@@ -1,12 +1,11 @@
-# Video to Audio Convertion
-##################################################################
-# Author : Arnab Basak
-
+# video to Audio conversion
+###################################################
 import os
 import imageio
 import moviepy.editor
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
+import speech_recognition as sr
 
 Tk().withdraw()
 filelocation = askopenfilename()
@@ -20,21 +19,18 @@ filename = os.path.splitext(basename)[0]
 video = moviepy.editor.VideoFileClip(filelocation)
 audio = video.audio
 
-aud = audio.write_audiofile(filename+".wav")
-print(aud)
+audio.write_audiofile(filename+".wav")
+# print(aud)
 
 print('Conversion Done Successfully!')
 
-
-# Audio to text convertion
-########################################################################
-#import library
-import speech_recognition as sr
+# Audio to text conversion
+######################################################################
 #Initiаlize  reсоgnizer  сlаss  (fоr  reсоgnizing  the  sрeeсh)
 r = sr.Recognizer()
 # Reading Audio file as source
 #  listening  the  аudiо  file  аnd  stоre  in  аudiо_text  vаriаble
-with sr.AudioFile('short.wav') as source:
+with sr.AudioFile('handsome.wav') as source:
     audio_text = r.listen(source)
 # recoginize_() method will throw a request error if the API is unreachable, hence using exception handling
     try:
@@ -46,26 +42,22 @@ with sr.AudioFile('short.wav') as source:
          print('Sorry.. run again...')
 
 
-# printing most repitative words in the text
-####################################################################################
-text = 'Ramanujan spoke about black holes nearly 100 years or more than hundred years ago there was no concept of black mathematics for black holes when there was no concept of Black Hole science always progress is like this but the concept then the theory and then the mathematics but he made the mathematics first before before their eyes when they are and still more in our mathematics notebooks and netbooks mathematics sim ki foreigner my baby please mathematics'
-count=0
-maxcount = 0
-l=[]
-words = words=text.split()
-for i in range(len(words)):
-    for j in range(len(words)):
-        if(words[i]==words[j]):        #finding count of each word
-            count+=1
-        else:
-            count=count
-        if(count==maxcount):          #comparing with maximum count
-            l.append(words[i])
-        elif(count>maxcount):         #if count greater than maxcount
-            l.clear()
-            l.append(words[i])
-            maxcount=count
-        else:
-            l=l
-        count=0
-print(l)                              #printing contents of l
+# printing the frequently occuring words in the text
+#################################################################
+# Python program to find the k most frequent words
+# from data set
+from collections import Counter
+
+data_set = text
+
+# split() returns list of all the words in the string
+split_it = data_set.split()
+
+# Pass the split_it list to instance of Counter class.
+Counter = Counter(split_it)
+
+# most_common() produces k frequently encountered
+# input values and their respective counts.
+most_occur = Counter.most_common(6)
+
+print("The Most Frequently occuring words in the video is : ",most_occur)
